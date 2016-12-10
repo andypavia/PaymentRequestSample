@@ -1,220 +1,38 @@
+$(document).ready(function() {
+  //Loading the same code into the HTML
 
-function startPaymentRequestStaticShipping()  {
+  $('#static-shipping-sample').html(Global.startPaymentRequestStaticShipping.toString());
 
-    var methodData = [
-        {
-        supportedMethods: ['basic-card'],
-        data: {
-            supportedNetworks: ['visa', 'mastercard', 'amex'],
-            supportedTypes: ['credit']
-        }
-        }
-    ];
+  $('#dynamic-shipping-sample').html(Global.startPaymentRequestDynamicShipping.toString());
 
-    var details =  {
-        displayItems: [
-        {
-            label: "Sub-total",
-            amount: { currency: "USD", value : "100.00" }, // US$100.00
-        },
-        {
-            label: "Sales Tax",
-            amount: { currency: "USD", value : "9.00" }, // US$9.00
-        }
-        ],
-        total:  {
-        label: "Total due",
-        amount: { currency: "USD", value : "109.00" }, // US$109.00
-        }
-    };
+  $('#no-shipping-sample').html(Global.startPaymentRequestDigitalMerchandise.toString());
 
-    var options = {
-        requestShipping: true 
-    };
+  $('#request-contact-sample').html(Global.startPaymentRequestWithContactInfo.toString());
 
-    //constructor
-    var request = new PaymentRequest(methodData, details, options);
+  //attaching event listeners
 
-    //Show the Native UI
-    request.show()
+  $('#request-contact-info').click(Global.startPaymentRequestWithContactInfo);
 
-    //When the promise is fulfilled, pass the results to your server for processing
-    .then(result => {
-        return process(result).then(response => {
-        // Examine server response
-        if (response.status === 200) {
-            //Show that the transaction was successful in the UI
-            return result.complete('success');
-        } else {
-            //Show in the Native UI that the transaction failed
-            return result.complete('fail');
-        }
-        })
-    });
-}
-document.getElementById('static-shipping').addEventListener('click', startPaymentRequestStaticShipping)
+  $('#no-shipping').click(Global.startPaymentRequestDigitalMerchandise);
 
-function startPaymentRequestDynamicShipping()  {
+  $('#dynamic-shipping').click(Global.startPaymentRequestDynamicShipping);
 
-    var methodData = [
-        {
-        supportedMethods: ['basic-card'],
-        data: {
-            supportedNetworks: ['visa', 'mastercard', 'amex'],
-            supportedTypes: ['credit']
-        }
-        }
-    ];
+  $('#static-shipping').click(Global.startPaymentRequestStaticShipping);
 
-    var details =  {
-        displayItems: [
-        {
-            label: "Sub-total",
-            amount: { currency: "USD", value : "100.00" }, // US$100.00
-        },
-        {
-            label: "Sales Tax",
-            amount: { currency: "USD", value : "9.00" }, // US$9.00
-        }
-        ],
-        total:  {
-        label: "Total due",
-        amount: { currency: "USD", value : "109.00" }, // US$109.00
-        }
-    };
+  $('.top-bar').click((event) =>{
+    var expander = $(event.target).parent().find('.expander')
+    if(expander.hasClass('expand')){
+      expander.removeClass('expand')
+      event.target.innerHTML = 'See the code'
+    } else {
+      expander.addClass('expand')
+      event.target.innerHTML = 'Hide the code'
+    }
+  })
 
-    var options = {
-        requestShipping: true 
-    };
+  //highlighting samples
 
-    //constructor
-    var request = new PaymentRequest(methodData, details, options);
-
-    //Show the Native UI
-    request.show()
-
-    //When the promise is fulfilled, pass the results to your server for processing
-    .then(result => {
-        return process(result).then(response => {
-        // Examine server response
-        if (response.status === 200) {
-            //Show that the transaction was successful in the UI
-            return result.complete('success');
-        } else {
-            //Show in the Native UI that the transaction failed
-            return result.complete('fail');
-        }
-        })
-    });
-}
-document.getElementById('dynamic-shipping').addEventListener('click', startPaymentRequestDynamicShipping)
-
-function startPaymentRequestDigitalMerchandise()  {
-
-    var methodData = [
-        {
-        supportedMethods: ['basic-card'],
-        data: {
-            supportedNetworks: ['visa', 'mastercard', 'amex'],
-            supportedTypes: ['credit']
-        }
-        }
-    ];
-
-    var details =  {
-        displayItems: [
-        {
-            label: "Sub-total",
-            amount: { currency: "USD", value : "100.00" }, // US$100.00
-        },
-        {
-            label: "Sales Tax",
-            amount: { currency: "USD", value : "9.00" }, // US$9.00
-        }
-        ],
-        total:  {
-        label: "Total due",
-        amount: { currency: "USD", value : "109.00" }, // US$109.00
-        }
-    };
-
-    var options = {
-        requestShipping: true 
-    };
-
-    //constructor
-    var request = new PaymentRequest(methodData, details, options);
-
-    //Show the Native UI
-    request.show()
-
-    //When the promise is fulfilled, pass the results to your server for processing
-    .then(result => {
-        return process(result).then(response => {
-        // Examine server response
-        if (response.status === 200) {
-            //Show that the transaction was successful in the UI
-            return result.complete('success');
-        } else {
-            //Show in the Native UI that the transaction failed
-            return result.complete('fail');
-        }
-        })
-    });
-}
-document.getElementById('no-shipping').addEventListener('click', startPaymentRequestDigitalMerchandise)
-
-function startPaymentRequestWithContactInfo()  {
-
-    var methodData = [
-        {
-        supportedMethods: ['basic-card'],
-        data: {
-            supportedNetworks: ['visa', 'mastercard', 'amex'],
-            supportedTypes: ['credit']
-        }
-        }
-    ];
-
-    var details =  {
-        displayItems: [
-        {
-            label: "Sub-total",
-            amount: { currency: "USD", value : "100.00" }, // US$100.00
-        },
-        {
-            label: "Sales Tax",
-            amount: { currency: "USD", value : "9.00" }, // US$9.00
-        }
-        ],
-        total:  {
-        label: "Total due",
-        amount: { currency: "USD", value : "109.00" }, // US$109.00
-        }
-    };
-
-    var options = {
-        requestShipping: true 
-    };
-
-    //constructor
-    var request = new PaymentRequest(methodData, details, options);
-
-    //Show the Native UI
-    request.show()
-
-    //When the promise is fulfilled, pass the results to your server for processing
-    .then(result => {
-        return process(result).then(response => {
-        // Examine server response
-        if (response.status === 200) {
-            //Show that the transaction was successful in the UI
-            return result.complete('success');
-        } else {
-            //Show in the Native UI that the transaction failed
-            return result.complete('fail');
-        }
-        })
-    });
-}
-document.getElementById('request-contact-info').addEventListener('click', startPaymentRequestWithContactInfo)
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
