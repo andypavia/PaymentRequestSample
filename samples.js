@@ -41,16 +41,7 @@ Global.startPaymentRequestStaticShipping = function()  {
 
     //When the promise is fulfilled, pass the results to your server for processing
     .then(result => {
-        return process(result).then(response => {
-        // Examine server response
-        if (response.status === 200) {
-            //Show that the transaction was successful in the UI
-            return result.complete('success');
-        } else {
-            //Show in the Native UI that the transaction failed
-            return result.complete('fail');
-        }
-        })
+      return result.complete('success');
     });
 }
 
@@ -95,16 +86,7 @@ Global.startPaymentRequestDynamicShipping = function()  {
 
     //When the promise is fulfilled, pass the results to your server for processing
     .then(result => {
-        return process(result).then(response => {
-        // Examine server response
-        if (response.status === 200) {
-            //Show that the transaction was successful in the UI
-            return result.complete('success');
-        } else {
-            //Show in the Native UI that the transaction failed
-            return result.complete('fail');
-        }
-        })
+        return result.complete('success');
     });
 }
 
@@ -149,16 +131,7 @@ Global.startPaymentRequestDigitalMerchandise = function()  {
 
     //When the promise is fulfilled, pass the results to your server for processing
     .then(result => {
-        return process(result).then(response => {
-        // Examine server response
-        if (response.status === 200) {
-            //Show that the transaction was successful in the UI
-            return result.complete('success');
-        } else {
-            //Show in the Native UI that the transaction failed
-            return result.complete('fail');
-        }
-        })
+        return result.complete('success');
     });
 }
 
@@ -203,15 +176,6 @@ Global.startPaymentRequestWithContactInfo = function()  {
 
     //When the promise is fulfilled, pass the results to your server for processing
     .then(result => {
-        return process(result).then(response => {
-        // Examine server response
-        if (response.status === 200) {
-            //Show that the transaction was successful in the UI
-            return result.complete('success');
-        } else {
-            //Show in the Native UI that the transaction failed
-            return result.complete('fail');
-        }
-        })
+        return result.complete('success');
     });
 }
