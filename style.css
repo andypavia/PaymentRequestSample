@@ -63,15 +63,21 @@ body {
 	background-color: #f8f8f8;
 	margin: 20px 0px;
 }
+
 .expander{
 	height:0%;
 	overflow: hidden;
 }
+
 .expander.expand {
 	height:100%;
 	transition: height .4s ease-in-out;
 	overflow: auto;
 
+}
+
+.hljs {
+	tab-size: 2;
 }
 button {
 		background-color: #337ab7;
