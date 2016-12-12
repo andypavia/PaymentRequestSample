@@ -88,7 +88,7 @@ Global.startPaymentRequestDynamicShipping = function()	{
 		return result.complete('success');
 	});
 
-	//Listens to a shipping address change
+	//Listen to a shipping address change
 	paymentRequest.addEventListener('shippingaddresschange', changeEvent => {
 		changeEvent.updateWith(new Promise(resolve => {
 			onShippingAddressChange(paymentRequest);
@@ -96,7 +96,7 @@ Global.startPaymentRequestDynamicShipping = function()	{
 		}));
 	});
 
-	//Listens to a shipping option change
+	//Listen to a shipping option change
 	paymentRequest.addEventListener('shippingoptionchange', changeEvent => {
 		changeEvent.updateWith(new Promise(resolve => {
 			onShippingOptionChange(paymentRequest);
