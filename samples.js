@@ -35,7 +35,8 @@ Global.startPaymentRequestStaticShipping = function()	{
 	//Show the Native UI
 	request.show()
 
-	//When the promise is fulfilled, pass the results to your server for processing
+	//When the promise is fulfilled, show the Wallet's success view
+	//In a real world scenario, the result obj would be sent to the server side for processing.
 	.then(result => {
 		return result.complete('success');
 	});
@@ -81,7 +82,8 @@ Global.startPaymentRequestDynamicShipping = function()	{
 	//Show the Native UI
 	request.show()
 
-	//When the promise is fulfilled, pass the results to your server for processing
+	//When the promise is fulfilled, show the Wallet's success view.
+	//In a real world scenario, the result obj would be sent to the server side for processing.
 	.then(result => {
 		return result.complete('success');
 	});
@@ -210,7 +212,8 @@ Global.startPaymentRequestDigitalMerchandise = function()	{
 	//Show the Native UI
 	request.show()
 
-	//When the promise is fulfilled, pass the results to your server for processing
+	//When the promise is fulfilled, show the Wallet's success view.
+	//In a real world scenario, the result obj would be sent to the server side for processing.
 	.then(result => {
 		return result.complete('success');
 	});
@@ -272,7 +275,8 @@ Global.startPaymentRequestWithContactInfo = function()	{
 	//Show the Native UI
 	request.show()
 
-	//When the promise is fulfilled, pass the results to your server for processing
+	//When the promise is fulfilled, show the Wallet's success view.
+	//In a real world scenario, the result obj would be sent to the server side for processing.
 	.then(result => {
 		return result.complete('success');
 	});
