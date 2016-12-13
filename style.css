@@ -33,6 +33,9 @@
 body {
 	font: 15px/20px "Segoe UI Webfont", "Segoe UI", sans-serif;
 }
+ul {
+	margin-bottom: 30px;
+}
 
 .container {
     max-width:100%;
