@@ -85,6 +85,7 @@ Global.startPaymentRequestDynamicShipping = function()	{
 	//When the promise is fulfilled, show the Wallet's success view.
 	//In a real world scenario, the result obj would be sent to the server side for processing.
 	.then(result => {
+		// process transaction response here
 		return result.complete('success');
 	});
 
