@@ -48,6 +48,10 @@ ul {
 	text-align: center;
 }
 
+h1 {
+	line-height: 1em;
+}
+
 .top-bar {
 		height:40px;
 		background-color:#bdc3c7;
