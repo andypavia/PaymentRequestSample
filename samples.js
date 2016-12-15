@@ -133,18 +133,20 @@ Global.startPaymentRequestDynamicShipping = function()  {
         label: 'Sales Tax',
         amount: { currency: "USD", value: tax.toFixed(2) }
       }]
-
-      details.total.amount.value = Math.max(0, subtotal + shippingCost + tax).toFixed(2);
+      var totalAmount = subtotal + shippingCost + tax
+      details.total.amount.value = Math.max(0, totalAmount).toFixed(2);
     }
   }
 
   function onShippingAddressChange(pr) {
     var addr = pr.shippingAddress;
-    console.log('shippingAddressChange: ' + addr.addressLine[0] + ', ' + addr.region + ' ' + addr.postalCode);
+    var strAddr = addr.addressLine[0] + ', ' + addr.region + ' ' + addr.postalCode
+    console.log('shippingAddressChange: ' + strAddr);
 
     if (addr.country === 'US') {
       details.shippingOptions = getShippingOptions(addr.region);
-      details.displayItems[1].pending = false; // shipping no longer pending, pre-selected
+      // shipping no longer pending, pre-selected
+      details.displayItems[1].pending = false; 
     } else {
       delete details.shippingOptions;
     }
