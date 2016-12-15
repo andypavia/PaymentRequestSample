@@ -57,7 +57,7 @@ Global.startPaymentRequestStaticShipping = function()  {
   });
 
   //Listen to a shipping option change
-  paymentRequest.addEventListener('shippingoptionchange', function(changeEvent) {
+  request.addEventListener('shippingoptionchange', function(changeEvent) {
     changeEvent.updateWith(new Promise(function(resolve) {
       onShippingOptionChange(paymentRequest);
       resolve(details);
@@ -145,7 +145,7 @@ Global.startPaymentRequestDynamicShipping = function()  {
   });
 
   //Listen to a shipping address change
-  paymentRequest.addEventListener('shippingaddresschange', function(changeEvent) {
+  request.addEventListener('shippingaddresschange', function(changeEvent) {
     changeEvent.updateWith(new Promise(function(resolve) {
       onShippingAddressChange(paymentRequest);
       resolve(details);
@@ -153,7 +153,7 @@ Global.startPaymentRequestDynamicShipping = function()  {
   });
 
   //Listen to a shipping option change
-  paymentRequest.addEventListener('shippingoptionchange', function(changeEvent) {
+  request.addEventListener('shippingoptionchange', function(changeEvent) {
     changeEvent.updateWith(new Promise(function(resolve) {
       onShippingOptionChange(paymentRequest);
       resolve(details);
