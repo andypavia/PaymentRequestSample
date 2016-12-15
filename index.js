@@ -12,7 +12,7 @@ $(document).ready(function() {
   $('#static-shipping').click(Global.startPaymentRequestStaticShipping);
 
   //Hide demo buttons if the browser doesn't support the Payment Request API
-  if (!'PaymentRequest' in window) {
+  if (!('PaymentRequest' in window)) {
     $('.not-supported').html('This browser does not support web payments. You should try Microsoft Edge.')
     $('button').each(function(i, block) {
       block.setAttribute('style', 'display: none;');
