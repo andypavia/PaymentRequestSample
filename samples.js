@@ -36,9 +36,9 @@ Global.startPaymentRequestStaticShipping = function()  {
   request.show()
 
   //When the promise is fulfilled, show the Wallet's success view
-  //In a real world scenario, the result obj would be sent 
+  //In a real world scenario, the result obj would be sent
   //to the server side for processing.
-  .then(result => {
+  .then(function(result) {
     return result.complete('success');
   });
 }
@@ -84,24 +84,24 @@ Global.startPaymentRequestDynamicShipping = function()  {
   request.show()
 
   //When the promise is fulfilled, show the Wallet's success view.
-  //In a real world scenario, the result obj would be sent 
+  //In a real world scenario, the result obj would be sent
   //to the server side for processing.
-  .then(result => {
+  .then(function(result) {
     // process transaction response here
     return result.complete('success');
   });
 
   //Listen to a shipping address change
-  paymentRequest.addEventListener('shippingaddresschange', changeEvent => {
-    changeEvent.updateWith(new Promise(resolve => {
+  paymentRequest.addEventListener('shippingaddresschange', function(changeEvent) {
+    changeEvent.updateWith(new Promise(function(resolve) {
       onShippingAddressChange(paymentRequest);
       resolve(details);
     }));
   });
 
   //Listen to a shipping option change
-  paymentRequest.addEventListener('shippingoptionchange', changeEvent => {
-    changeEvent.updateWith(new Promise(resolve => {
+  paymentRequest.addEventListener('shippingoptionchange', function(changeEvent) {
+    changeEvent.updateWith(new Promise(function(resolve) {
       onShippingOptionChange(paymentRequest);
       resolve(details);
     }));
@@ -218,9 +218,9 @@ Global.startPaymentRequestDigitalMerchandise = function()  {
   request.show()
 
   //When the promise is fulfilled, show the Wallet's success view.
-  //In a real world scenario, the result obj would be sent 
+  //In a real world scenario, the result obj would be sent
   //to the server side for processing.
-  .then(result => {
+  .then(function(result) {
     return result.complete('success');
   });
 }
@@ -284,7 +284,7 @@ Global.startPaymentRequestWithContactInfo = function()  {
   //When the promise is fulfilled, show the Wallet's success view.
   //In a real world scenario, the result obj would be sent to
   //the server side for processing.
-  .then(result => {
+  .then(function(result) {
     return result.complete('success');
   });
 }
