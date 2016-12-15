@@ -109,10 +109,17 @@ Global.startPaymentRequestDynamicShipping = function()  {
 
   function onShippingOptionChange(pr) {
     if (pr.shippingOption) {
-      var shippingOption = _.find(details.shippingOptions, {
-        id: pr.shippingOption
-      });
-      toastr.info(`shippingOptionChange: ${shippingOption.label}`);
+      for (var index = 0; index < details.shippingOptions.length; index++) {
+        var opt = details.shippingOptions[index];
+        if (opt.id == pr.shippingOption) {
+          var shippingOption = opt;
+          break;
+        }
+      }
+      if (!shippingOption) {
+        return;
+      }
+      console.log('shippingOptionChange: ' + shippingOption.label);
       var shippingCost = Number(shippingOption.amount.value);
 
       details.displayItems = [{
@@ -133,7 +140,7 @@ Global.startPaymentRequestDynamicShipping = function()  {
 
   function onShippingAddressChange(pr) {
     var addr = pr.shippingAddress;
-    toastr.info(`shippingAddressChange: ${addr.addressLine[0]}, ${addr.region} ${addr.postalCode}`);
+    console.log('shippingAddressChange: ' + addr.addressLine[0] + ', ' + addr.region + ' ' + addr.postalCode);
 
     if (addr.country === 'US') {
       details.shippingOptions = getShippingOptions(addr.region);
