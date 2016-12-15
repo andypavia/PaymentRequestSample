@@ -52,6 +52,11 @@ h1 {
 	line-height: 1em;
 }
 
+.not-supported {
+	font-weight: 600;
+	color:#2980b9;
+	font-size:16px;
+}
 .top-bar {
 		height:40px;
 		background-color:#bdc3c7;
@@ -86,10 +91,11 @@ h1 {
 .hljs {
 	tab-size: 2;
 }
+
 button {
-		background-color: #337ab7;
-		border-color:#2e6da4;
-		color:white;
+	background-color: #337ab7;
+	border-color:#2e6da4;
+	color:white;
     display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;
