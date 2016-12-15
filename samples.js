@@ -23,20 +23,20 @@ Global.startPaymentRequestStaticShipping = function()  {
       label: "Total due",
       amount: { currency: "USD", value : "109.00" }, // US$109.00
     },
-		shippingOptions: [{
-			id: 'NO_RUSH',
-			label: 'No-Rush Shipping',
-			amount: { currency: 'USD', value: '0.00' },
-			selected: true
-		}, {
-			id: 'STANDARD',
-			label: 'Standard Shipping',
-			amount: { currency: 'USD', value: '5.00' }
-		}, {
-			id: 'EXPEDITED',
-			label: 'Two-Day Shipping',
-			amount: { currency: 'USD', value: '7.00' }
-		}]
+    shippingOptions: [{
+      id: 'NO_RUSH',
+      label: 'No-Rush Shipping',
+      amount: { currency: 'USD', value: '0.00' },
+      selected: true
+    }, {
+      id: 'STANDARD',
+      label: 'Standard Shipping',
+      amount: { currency: 'USD', value: '5.00' }
+    }, {
+      id: 'EXPEDITED',
+      label: 'Two-Day Shipping',
+      amount: { currency: 'USD', value: '7.00' }
+    }]
   };
 
   var options = {
@@ -56,17 +56,17 @@ Global.startPaymentRequestStaticShipping = function()  {
     return result.complete('success');
   });
 
-	//Listen to a shipping option change
-	paymentRequest.addEventListener('shippingoptionchange', function(changeEvent) {
-		changeEvent.updateWith(new Promise(function(resolve) {
-			onShippingOptionChange(paymentRequest);
-			resolve(details);
-		}));
-	});
+  //Listen to a shipping option change
+  paymentRequest.addEventListener('shippingoptionchange', function(changeEvent) {
+    changeEvent.updateWith(new Promise(function(resolve) {
+      onShippingOptionChange(paymentRequest);
+      resolve(details);
+    }));
+  });
 
-	function onShippingOptionChange(pr) {
-		if (pr.shippingOption) {
-			for (var index = 0; index < details.shippingOptions.length; index++) {
+  function onShippingOptionChange(pr) {
+    if (pr.shippingOption) {
+      for (var index = 0; index < details.shippingOptions.length; index++) {
         var opt = details.shippingOptions[index];
         if (opt.id == pr.shippingOption) {
           var shippingOption = opt;
@@ -77,23 +77,23 @@ Global.startPaymentRequestStaticShipping = function()  {
         return;
       }
       console.log('shippingOptionChange: ' + shippingOption.label);
-			var shippingCost = Number(shippingOption.amount.value);
+      var shippingCost = Number(shippingOption.amount.value);
 
-			details.displayItems = [{
-				 label: 'Sub-total',
-				 amount: { currency: 'USD', value: subtotal.toFixed(2) }
-			}, {
-				 label: 'Shipping',
-				 amount: { currency: 'USD', value: shippingCost.toFixed(2) },
-				 pending: false
-			}, {
-				 label: 'Sales Tax',
-				 amount: { currency: "USD", value: tax.toFixed(2) }
-			}]
-			var totalAmount = subtotal + shippingCost + tax;
-			details.total.amount.value = Math.max(0, totalAmount).toFixed(2);
-		}
-	}
+      details.displayItems = [{
+         label: 'Sub-total',
+         amount: { currency: 'USD', value: subtotal.toFixed(2) }
+      }, {
+         label: 'Shipping',
+         amount: { currency: 'USD', value: shippingCost.toFixed(2) },
+         pending: false
+      }, {
+         label: 'Sales Tax',
+         amount: { currency: "USD", value: tax.toFixed(2) }
+      }]
+      var totalAmount = subtotal + shippingCost + tax;
+      details.total.amount.value = Math.max(0, totalAmount).toFixed(2);
+    }
+  }
 }
 
 Global.startPaymentRequestDynamicShipping = function()  {
