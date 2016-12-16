@@ -10,19 +10,24 @@ Global.startPaymentRequestStaticShipping = function () {
     }
   }];
 
+  var subtotal = 44.00;
+  var tax = 4.40;
   var details = {
-    displayItems: [{
-      label: "Sub-total",
-      amount: { currency: "USD", value: "100.00" }, // US$100.00
-    },
-    {
-      label: "Sales Tax",
-      amount: { currency: "USD", value: "9.00" }, // US$9.00
-    }],
     total: {
-      label: "Total due",
-      amount: { currency: "USD", value: "109.00" }, // US$109.00
+      label: 'Total due',
+      amount: { currency: 'USD', value: (subtotal + tax).toFixed(2) }
     },
+    displayItems: [{
+      label: 'Sub-total',
+      amount: { currency: 'USD', value: subtotal.toFixed(2) }
+    }, {
+      label: 'Shipping',
+      amount: { currency: 'USD', value: '0.00' },
+      pending: true
+    }, {
+      label: 'Sales Tax',
+      amount: { currency: "USD", value: tax.toFixed(2) }
+    }],
     shippingOptions: [{
       id: 'NO_RUSH',
       label: 'No-Rush Shipping',
