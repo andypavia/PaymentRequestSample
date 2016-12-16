@@ -26,7 +26,7 @@ Global.startPaymentRequestStaticShipping = function () {
       pending: true
     }, {
       label: 'Sales Tax',
-      amount: { currency: "USD", value: tax.toFixed(2) }
+      amount: { currency: 'USD', value: tax.toFixed(2) }
     }],
     shippingOptions: [{
       id: 'NO_RUSH',
@@ -94,7 +94,7 @@ Global.startPaymentRequestStaticShipping = function () {
         pending: false
       }, {
         label: 'Sales Tax',
-        amount: { currency: "USD", value: tax.toFixed(2) }
+        amount: { currency: 'USD', value: tax.toFixed(2) }
       }]
       var totalAmount = subtotal + shippingCost + tax;
       details.total.amount.value = Math.max(0, totalAmount).toFixed(2);
@@ -128,7 +128,7 @@ Global.startPaymentRequestDynamicShipping = function () {
       pending: true
     }, {
       label: 'Sales Tax',
-      amount: { currency: "USD", value: tax.toFixed(2) }
+      amount: { currency: 'USD', value: tax.toFixed(2) }
     }]
   };
 
@@ -190,7 +190,7 @@ Global.startPaymentRequestDynamicShipping = function () {
         pending: false
       }, {
         label: 'Sales Tax',
-        amount: { currency: "USD", value: tax.toFixed(2) }
+        amount: { currency: 'USD', value: tax.toFixed(2) }
       }]
       var totalAmount = subtotal + shippingCost + tax;
       details.total.amount.value = Math.max(0, totalAmount).toFixed(2);
@@ -271,7 +271,7 @@ Global.startPaymentRequestDigitalMerchandise = function () {
       amount: { currency: 'USD', value: subtotal.toFixed(2) }
     }, {
       label: 'Sales Tax',
-      amount: { currency: "USD", value: tax.toFixed(2) }
+      amount: { currency: 'USD', value: tax.toFixed(2) }
     }]
   };
 
@@ -319,7 +319,7 @@ Global.startPaymentRequestWithContactInfo = function () {
       amount: { currency: 'USD', value: '0.00' }
     }, {
       label: 'Sales Tax',
-      amount: { currency: "USD", value: tax.toFixed(2) }
+      amount: { currency: 'USD', value: tax.toFixed(2) }
     }],
     shippingOptions: [{
       id: 'NO_RUSH',
@@ -389,7 +389,7 @@ Global.startPaymentRequestWithContactInfo = function () {
         pending: false
       }, {
         label: 'Sales Tax',
-        amount: { currency: "USD", value: tax.toFixed(2) }
+        amount: { currency: 'USD', value: tax.toFixed(2) }
       }]
       var totalAmount = subtotal + shippingCost + tax;
       details.total.amount.value = Math.max(0, totalAmount).toFixed(2);
