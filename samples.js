@@ -49,7 +49,7 @@ Global.startPaymentRequestStaticShipping = function () {
   //Listen to a shipping option change
   request.addEventListener('shippingoptionchange', function (changeEvent) {
     changeEvent.updateWith(new Promise(function (resolve) {
-      onShippingOptionChange(paymentRequest);
+      onShippingOptionChange(request);
       resolve(details);
     }));
   });
@@ -137,7 +137,7 @@ Global.startPaymentRequestDynamicShipping = function () {
   //Listen to a shipping address change
   request.addEventListener('shippingaddresschange', function (changeEvent) {
     changeEvent.updateWith(new Promise(function (resolve) {
-      onShippingAddressChange(paymentRequest);
+      onShippingAddressChange(request);
       resolve(details);
     }));
   });
@@ -145,7 +145,7 @@ Global.startPaymentRequestDynamicShipping = function () {
   //Listen to a shipping option change
   request.addEventListener('shippingoptionchange', function (changeEvent) {
     changeEvent.updateWith(new Promise(function (resolve) {
-      onShippingOptionChange(paymentRequest);
+      onShippingOptionChange(request);
       resolve(details);
     }));
   });
@@ -344,7 +344,7 @@ Global.startPaymentRequestWithContactInfo = function () {
   //Listen to a shipping option change
   request.addEventListener('shippingoptionchange', function (changeEvent) {
     changeEvent.updateWith(new Promise(function (resolve) {
-      onShippingOptionChange(paymentRequest);
+      onShippingOptionChange(request);
       resolve(details);
     }));
   });
