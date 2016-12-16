@@ -1,6 +1,6 @@
 var Global = {}
 
-Global.startPaymentRequestStaticShipping = function()  {
+Global.startPaymentRequestStaticShipping = function () {
 
   var methodData = [{
     supportedMethods: ['basic-card'],
@@ -10,18 +10,18 @@ Global.startPaymentRequestStaticShipping = function()  {
     }
   }];
 
-  var details =  {
+  var details = {
     displayItems: [{
       label: "Sub-total",
-      amount: { currency: "USD", value : "100.00" }, // US$100.00
+      amount: { currency: "USD", value: "100.00" }, // US$100.00
     },
     {
       label: "Sales Tax",
-      amount: { currency: "USD", value : "9.00" }, // US$9.00
+      amount: { currency: "USD", value: "9.00" }, // US$9.00
     }],
-    total:  {
+    total: {
       label: "Total due",
-      amount: { currency: "USD", value : "109.00" }, // US$109.00
+      amount: { currency: "USD", value: "109.00" }, // US$109.00
     },
     shippingOptions: [{
       id: 'NO_RUSH',
@@ -46,23 +46,24 @@ Global.startPaymentRequestStaticShipping = function()  {
   //constructor
   var request = new PaymentRequest(methodData, details, options);
 
-  //Show the Native UI
-  request.show()
-
-  //When the promise is fulfilled, show the Wallet's success view
-  //In a real world scenario, the result obj would be sent
-  //to the server side for processing.
-  .then(function(result) {
-    return result.complete('success');
-  });
-
   //Listen to a shipping option change
-  request.addEventListener('shippingoptionchange', function(changeEvent) {
-    changeEvent.updateWith(new Promise(function(resolve) {
+  request.addEventListener('shippingoptionchange', function (changeEvent) {
+    changeEvent.updateWith(new Promise(function (resolve) {
       onShippingOptionChange(paymentRequest);
       resolve(details);
     }));
   });
+
+  //Show the Native UI
+  request.show()
+
+    //When the promise is fulfilled, show the Wallet's success view
+    //In a real world scenario, the result obj would be sent
+    //to the server side for processing.
+    .then(function (result) {
+      return result.complete('success');
+    });
+
 
   function onShippingOptionChange(pr) {
     if (pr.shippingOption) {
@@ -80,15 +81,15 @@ Global.startPaymentRequestStaticShipping = function()  {
       var shippingCost = Number(shippingOption.amount.value);
 
       details.displayItems = [{
-         label: 'Sub-total',
-         amount: { currency: 'USD', value: subtotal.toFixed(2) }
+        label: 'Sub-total',
+        amount: { currency: 'USD', value: subtotal.toFixed(2) }
       }, {
-         label: 'Shipping',
-         amount: { currency: 'USD', value: shippingCost.toFixed(2) },
-         pending: false
+        label: 'Shipping',
+        amount: { currency: 'USD', value: shippingCost.toFixed(2) },
+        pending: false
       }, {
-         label: 'Sales Tax',
-         amount: { currency: "USD", value: tax.toFixed(2) }
+        label: 'Sales Tax',
+        amount: { currency: "USD", value: tax.toFixed(2) }
       }]
       var totalAmount = subtotal + shippingCost + tax;
       details.total.amount.value = Math.max(0, totalAmount).toFixed(2);
@@ -96,7 +97,7 @@ Global.startPaymentRequestStaticShipping = function()  {
   }
 }
 
-Global.startPaymentRequestDynamicShipping = function()  {
+Global.startPaymentRequestDynamicShipping = function () {
 
   var methodData = [{
     supportedMethods: ['basic-card'],
@@ -114,15 +115,15 @@ Global.startPaymentRequestDynamicShipping = function()  {
       amount: { currency: 'USD', value: (subtotal + tax).toFixed(2) }
     },
     displayItems: [{
-        label: 'Sub-total',
-        amount: { currency: 'USD', value: subtotal.toFixed(2) }
-      }, {
-        label: 'Shipping',
-        amount: { currency: 'USD', value: '0.00' },
-        pending: true
-      }, {
-        label: 'Sales Tax',
-        amount: { currency: "USD", value: tax.toFixed(2) }
+      label: 'Sub-total',
+      amount: { currency: 'USD', value: subtotal.toFixed(2) }
+    }, {
+      label: 'Shipping',
+      amount: { currency: 'USD', value: '0.00' },
+      pending: true
+    }, {
+      label: 'Sales Tax',
+      amount: { currency: "USD", value: tax.toFixed(2) }
     }]
   };
 
@@ -133,32 +134,32 @@ Global.startPaymentRequestDynamicShipping = function()  {
   //constructor
   var request = new PaymentRequest(methodData, details, options);
 
-  //Show the Native UI
-  request.show()
-
-  //When the promise is fulfilled, show the Wallet's success view.
-  //In a real world scenario, the result obj would be sent
-  //to the server side for processing.
-  .then(function(result) {
-    // process transaction response here
-    return result.complete('success');
-  });
-
   //Listen to a shipping address change
-  request.addEventListener('shippingaddresschange', function(changeEvent) {
-    changeEvent.updateWith(new Promise(function(resolve) {
+  request.addEventListener('shippingaddresschange', function (changeEvent) {
+    changeEvent.updateWith(new Promise(function (resolve) {
       onShippingAddressChange(paymentRequest);
       resolve(details);
     }));
   });
 
   //Listen to a shipping option change
-  request.addEventListener('shippingoptionchange', function(changeEvent) {
-    changeEvent.updateWith(new Promise(function(resolve) {
+  request.addEventListener('shippingoptionchange', function (changeEvent) {
+    changeEvent.updateWith(new Promise(function (resolve) {
       onShippingOptionChange(paymentRequest);
       resolve(details);
     }));
   });
+
+  //Show the Native UI
+  request.show()
+
+    //When the promise is fulfilled, show the Wallet's success view.
+    //In a real world scenario, the result obj would be sent
+    //to the server side for processing.
+    .then(function (result) {
+      // process transaction response here
+      return result.complete('success');
+    });
 
   function onShippingOptionChange(pr) {
     if (pr.shippingOption) {
@@ -210,18 +211,18 @@ Global.startPaymentRequestDynamicShipping = function()  {
       case 'WA':
       case 'OR':
         return [{
-            id: 'NO_RUSH',
-            label: 'No-Rush Shipping',
-            amount: { currency: 'USD', value: '0.00' },
-            selected: true
-          }, {
-            id: 'STANDARD',
-            label: 'Standard Shipping',
-            amount: { currency: 'USD', value: '5.00' }
-          }, {
-            id: 'EXPEDITED',
-            label: 'Two-Day Shipping',
-            amount: { currency: 'USD', value: '7.00' }
+          id: 'NO_RUSH',
+          label: 'No-Rush Shipping',
+          amount: { currency: 'USD', value: '0.00' },
+          selected: true
+        }, {
+          id: 'STANDARD',
+          label: 'Standard Shipping',
+          amount: { currency: 'USD', value: '5.00' }
+        }, {
+          id: 'EXPEDITED',
+          label: 'Two-Day Shipping',
+          amount: { currency: 'USD', value: '7.00' }
         }];
       default:
         return [{
@@ -242,7 +243,7 @@ Global.startPaymentRequestDynamicShipping = function()  {
   }
 }
 
-Global.startPaymentRequestDigitalMerchandise = function()  {
+Global.startPaymentRequestDigitalMerchandise = function () {
 
   var methodData = [{
     supportedMethods: ['basic-card'],
@@ -279,15 +280,15 @@ Global.startPaymentRequestDigitalMerchandise = function()  {
   //Show the Native UI
   request.show()
 
-  //When the promise is fulfilled, show the Wallet's success view.
-  //In a real world scenario, the result obj would be sent
-  //to the server side for processing.
-  .then(function(result) {
-    return result.complete('success');
-  });
+    //When the promise is fulfilled, show the Wallet's success view.
+    //In a real world scenario, the result obj would be sent
+    //to the server side for processing.
+    .then(function (result) {
+      return result.complete('success');
+    });
 }
 
-Global.startPaymentRequestWithContactInfo = function()  {
+Global.startPaymentRequestWithContactInfo = function () {
 
   var methodData = [{
     supportedMethods: ['basic-card'],
@@ -340,13 +341,53 @@ Global.startPaymentRequestWithContactInfo = function()  {
   //constructor
   var request = new PaymentRequest(methodData, details, options);
 
+  //Listen to a shipping option change
+  request.addEventListener('shippingoptionchange', function (changeEvent) {
+    changeEvent.updateWith(new Promise(function (resolve) {
+      onShippingOptionChange(paymentRequest);
+      resolve(details);
+    }));
+  });
+
+
   //Show the Native UI
   request.show()
 
-  //When the promise is fulfilled, show the Wallet's success view.
-  //In a real world scenario, the result obj would be sent to
-  //the server side for processing.
-  .then(function(result) {
-    return result.complete('success');
-  });
+    //When the promise is fulfilled, show the Wallet's success view.
+    //In a real world scenario, the result obj would be sent to
+    //the server side for processing.
+    .then(function (result) {
+      return result.complete('success');
+    });
+
+  function onShippingOptionChange(pr) {
+    if (pr.shippingOption) {
+      for (var index = 0; index < details.shippingOptions.length; index++) {
+        var opt = details.shippingOptions[index];
+        if (opt.id == pr.shippingOption) {
+          var shippingOption = opt;
+          break;
+        }
+      }
+      if (!shippingOption) {
+        return;
+      }
+      console.log('shippingOptionChange: ' + shippingOption.label);
+      var shippingCost = Number(shippingOption.amount.value);
+
+      details.displayItems = [{
+        label: 'Sub-total',
+        amount: { currency: 'USD', value: subtotal.toFixed(2) }
+      }, {
+        label: 'Shipping',
+        amount: { currency: 'USD', value: shippingCost.toFixed(2) },
+        pending: false
+      }, {
+        label: 'Sales Tax',
+        amount: { currency: "USD", value: tax.toFixed(2) }
+      }]
+      var totalAmount = subtotal + shippingCost + tax;
+      details.total.amount.value = Math.max(0, totalAmount).toFixed(2);
+    }
+  }
 }
