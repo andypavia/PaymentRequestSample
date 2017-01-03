@@ -130,3 +130,8 @@ button:disabled {
 button:disabled:hover {
   border:none;
 }
+
+.address {
+  color:#767676;
+  margin-bottom: 20px;
+}

@@ -218,7 +218,6 @@ Global.startPaymentRequestDynamicShipping = function () {
   function getShippingOptions(state) {
     switch (state) {
       case 'WA':
-      case 'OR':
         return [{
           id: 'NO_RUSH',
           label: 'No-Rush Shipping',
