@@ -59,20 +59,18 @@ Global.startPaymentRequestStaticShipping = function () {
     }));
   });
 
-  try {
-    //Show the Native UI
-    request.show()
+  //Show the Native UI
+  request.show()
 
-    //When the promise is fulfilled, show the Wallet's success view
-    //In a real world scenario, the result obj would be sent
-    //to the server side for processing.
-    .then(function (result) {
-      return result.complete('success');
-    });
-  } catch(err) {
+  //When the promise is fulfilled, show the Wallet's success view
+  //In a real world scenario, the result obj would be sent
+  //to the server side for processing.
+  .then(function (result) {
+    return result.complete('success');
+  }).catch(function(){
     console.error("Uh oh, bad payment response!", err.message);
-    paymentResponse.complete("fail");
-  }
+    paymentResponse.complete("fail")
+  });
 
   function onShippingOptionChange(pr) {
     if (pr.shippingOption) {
@@ -159,20 +157,18 @@ Global.startPaymentRequestDynamicShipping = function () {
     }));
   });
 
-  try {
-    //Show the Native UI
-    request.show()
+  //Show the Native UI
+  request.show()
 
-    //When the promise is fulfilled, show the Wallet's success view
-    //In a real world scenario, the result obj would be sent
-    //to the server side for processing.
-    .then(function (result) {
-      return result.complete('success');
-    });
-  } catch(err) {
+  //When the promise is fulfilled, show the Wallet's success view
+  //In a real world scenario, the result obj would be sent
+  //to the server side for processing.
+  .then(function (result) {
+    return result.complete('success');
+  }).catch(function(){
     console.error("Uh oh, bad payment response!", err.message);
-    paymentResponse.complete("fail");
-  }
+    paymentResponse.complete("fail")
+  });
 
   function onShippingOptionChange(pr) {
     if (pr.shippingOption) {
@@ -290,7 +286,7 @@ Global.startPaymentRequestDigitalMerchandise = function () {
   //constructor
   var request = new PaymentRequest(methodData, details, options);
 
-  try {
+
     //Show the Native UI
     request.show()
 
@@ -299,11 +295,10 @@ Global.startPaymentRequestDigitalMerchandise = function () {
     //to the server side for processing.
     .then(function (result) {
       return result.complete('success');
+    }).catch(function(){
+      console.error("Uh oh, bad payment response!", err.message);
+      paymentResponse.complete("fail")
     });
-  } catch(err) {
-    console.error("Uh oh, bad payment response!", err.message);
-    paymentResponse.complete("fail");
-  }
 }
 
 Global.startPaymentRequestWithContactInfo = function () {
@@ -367,21 +362,19 @@ Global.startPaymentRequestWithContactInfo = function () {
     }));
   });
 
+  //Show the Native UI
+  request.show()
 
-  try {
-    //Show the Native UI
-    request.show()
-
-    //When the promise is fulfilled, show the Wallet's success view
-    //In a real world scenario, the result obj would be sent
-    //to the server side for processing.
-    .then(function (result) {
-      return result.complete('success');
-    });
-  } catch(err) {
+  //When the promise is fulfilled, show the Wallet's success view
+  //In a real world scenario, the result obj would be sent
+  //to the server side for processing.
+  .then(function (result) {
+    return result.complete('success');
+  }).catch(function(){
     console.error("Uh oh, bad payment response!", err.message);
-    paymentResponse.complete("fail");
-  }
+    paymentResponse.complete("fail")
+  });
+
 
   function onShippingOptionChange(pr) {
     if (pr.shippingOption) {

@@ -23,15 +23,14 @@ window.onload = function() {
 
   //Hide demo buttons if the browser doesn't support the Payment Request API
   if (!('PaymentRequest' in window)) {
-    notSupportedMessage.innerHTML = 'This browser does not support web payments. You should try the Microsoft Edge browser!'
-    buttons = document.getElementsByTagName("button");
-    for (i = 0; i < buttons.length; i++) {
-      buttons[i].disabled = true
-    };
+    notSupportedMessage.innerHTML = 'This browser does not support web payments. You should try the Microsoft Edge browser!';
+    forEach('button', function(button){
+      button.disabled = true
+    })
   }
 
   //Expand or contract code displayer
-  [].forEach.call(document.querySelectorAll('.top-bar'), function(div) {
+  forEach('.top-bar', function(div) {
     div.addEventListener('click', function(event) {
       var expander = event.target.parentElement.querySelector('.expander')
       var text = expander.classList.contains('expand') ? 'See the code' : 'Hide the code'
@@ -41,8 +40,12 @@ window.onload = function() {
   });
 
   //highlighting samples
-  [].forEach.call(document.querySelectorAll('pre code'), function(div) {
+  forEach('pre code', function(div) {
     hljs.highlightBlock(div);
   });
+
+  function forEach(selector, iteratee) {
+    Array.prototype.forEach.call(document.querySelectorAll(selector), iteratee);
+  }
 
 }
