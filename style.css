@@ -51,7 +51,7 @@ h1 {
   line-height: 1em;
 }
 
-.not-supported {
+#not-supported {
   font-weight: 600;
   color:#2980b9;
   font-size:16px;
@@ -120,4 +120,13 @@ button:hover{
   background-color: #286090;
   border-color:#122b40;
   color:white;
+}
+
+button:disabled {
+  color:black;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQIW2NkQAKrVq36zwjjgzhhYWGMYAEYB8RmROaABADeOQ8CXl/xfgAAAABJRU5ErkJggg==) repeat;
+}
+
+button:disabled:hover {
+  border:none;
 }
