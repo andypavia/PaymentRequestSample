@@ -32,7 +32,19 @@ var onShippingOptionChange = function(pr, details, subtotal, tax) {
 		details.total.amount.value = Math.max(0, totalAmount).toFixed(2);
 	}
 }
+var onShippingAddressChange = function(pr) {
+		var addr = pr.shippingAddress;
+		var strAddr = addr.addressLine[0] + ', ' + addr.region + ' ' + addr.postalCode
+		console.log('shippingAddressChange: ' + strAddr);
 
+		if (addr.country === 'US') {
+			details.shippingOptions = getShippingOptions(addr.region);
+			// shipping no longer pending, pre-selected
+			details.displayItems[1].pending = false;
+		} else {
+			delete details.shippingOptions;
+		}
+	}
 window.Global = {};
 
 window.Global.startPaymentRequestStaticShipping = function () {
@@ -204,20 +216,6 @@ window.Global.startPaymentRequestDynamicShipping = function () {
 					label: 'Two-Day Shipping',
 					amount: { currency: 'USD', value: '8.00' }
 				}];
-		}
-	}
-
-	function onShippingAddressChange(pr) {
-		var addr = pr.shippingAddress;
-		var strAddr = addr.addressLine[0] + ', ' + addr.region + ' ' + addr.postalCode
-		console.log('shippingAddressChange: ' + strAddr);
-
-		if (addr.country === 'US') {
-			details.shippingOptions = getShippingOptions(addr.region);
-			// shipping no longer pending, pre-selected
-			details.displayItems[1].pending = false;
-		} else {
-			delete details.shippingOptions;
 		}
 	}
 }
