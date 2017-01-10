@@ -33,7 +33,7 @@ var onShippingOptionChange = function(pr, details, subtotal, tax) {
 	}
 }
 //shipping address change handler
-var onShippingAddressChange = function(pr) {
+var onShippingAddressChange = function(pr, details) {
 	var addr = pr.shippingAddress;
 	var strAddr = addr.addressLine[0] + ', ' + addr.region + ' ' + addr.postalCode
 	console.log('shippingAddressChange: ' + strAddr);
@@ -195,7 +195,7 @@ window.Global.startPaymentRequestDynamicShipping = function () {
 	//Listen to a shipping address change
 	request.addEventListener('shippingaddresschange', function (changeEvent) {
 		changeEvent.updateWith(new Promise(function (resolve) {
-			onShippingAddressChange(request);
+			onShippingAddressChange(request, details);
 			resolve(details);
 		}));
 	});
