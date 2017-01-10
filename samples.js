@@ -46,6 +46,41 @@ var onShippingAddressChange = function(pr) {
 		delete details.shippingOptions;
 	}
 }
+//function to get shipping address for dynamic shipping example
+var getShippingOptions = function(state) {
+	switch (state) {
+		case 'WA':
+			return [{
+				id: 'NO_RUSH',
+				label: 'No-Rush Shipping',
+				amount: { currency: 'USD', value: '0.00' },
+				selected: true
+			}, {
+				id: 'STANDARD',
+				label: 'Standard Shipping',
+				amount: { currency: 'USD', value: '5.00' }
+			}, {
+				id: 'EXPEDITED',
+				label: 'Two-Day Shipping',
+				amount: { currency: 'USD', value: '7.00' }
+			}];
+		default:
+			return [{
+				id: 'NO_RUSH',
+				label: 'No-Rush Shipping',
+				amount: { currency: 'USD', value: '0.00' },
+				selected: true
+			}, {
+				id: 'STANDARD',
+				label: 'Standard Shipping',
+				amount: { currency: 'USD', value: '6.00' }
+			}, {
+				id: 'EXPEDITED',
+				label: 'Two-Day Shipping',
+				amount: { currency: 'USD', value: '8.00' }
+			}];
+	}
+}
 
 window.Global = {};
 
@@ -185,41 +220,6 @@ window.Global.startPaymentRequestDynamicShipping = function () {
 		console.error("Uh oh, bad payment response!", err.message);
 		paymentResponse.complete("fail")
 	});
-
-	function getShippingOptions(state) {
-		switch (state) {
-			case 'WA':
-				return [{
-					id: 'NO_RUSH',
-					label: 'No-Rush Shipping',
-					amount: { currency: 'USD', value: '0.00' },
-					selected: true
-				}, {
-					id: 'STANDARD',
-					label: 'Standard Shipping',
-					amount: { currency: 'USD', value: '5.00' }
-				}, {
-					id: 'EXPEDITED',
-					label: 'Two-Day Shipping',
-					amount: { currency: 'USD', value: '7.00' }
-				}];
-			default:
-				return [{
-					id: 'NO_RUSH',
-					label: 'No-Rush Shipping',
-					amount: { currency: 'USD', value: '0.00' },
-					selected: true
-				}, {
-					id: 'STANDARD',
-					label: 'Standard Shipping',
-					amount: { currency: 'USD', value: '6.00' }
-				}, {
-					id: 'EXPEDITED',
-					label: 'Two-Day Shipping',
-					amount: { currency: 'USD', value: '8.00' }
-				}];
-		}
-	}
 }
 
 window.Global.startPaymentRequestDigitalMerchandise = function () {
