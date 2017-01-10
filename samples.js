@@ -2,7 +2,7 @@
 	'use strict';
 })
 //shipping option change handler
-var onShippingOptionChange = function(pr) {
+var onShippingOptionChange = function(pr, details) {
 	if (pr.shippingOption) {
 		for (var index = 0; index < details.shippingOptions.length; index++) {
 			var opt = details.shippingOptions[index];
@@ -88,7 +88,7 @@ window.Global.startPaymentRequestStaticShipping = function () {
 	//Listen to a shipping option change
 	request.addEventListener('shippingoptionchange', function (changeEvent) {
 		changeEvent.updateWith(new Promise(function (resolve) {
-			onShippingOptionChange(request);
+			onShippingOptionChange(request, details);
 			resolve(details);
 		}));
 	});
@@ -154,7 +154,7 @@ window.Global.startPaymentRequestDynamicShipping = function () {
 	//Listen to a shipping option change
 	request.addEventListener('shippingoptionchange', function (changeEvent) {
 		changeEvent.updateWith(new Promise(function (resolve) {
-			onShippingOptionChange(request);
+			onShippingOptionChange(request, details);
 			resolve(details);
 		}));
 	});
@@ -325,7 +325,7 @@ window.Global.startPaymentRequestWithContactInfo = function () {
 	//Listen to a shipping option change
 	request.addEventListener('shippingoptionchange', function (changeEvent) {
 		changeEvent.updateWith(new Promise(function (resolve) {
-			onShippingOptionChange(request);
+			onShippingOptionChange(request, details);
 			resolve(details);
 		}));
 	});
