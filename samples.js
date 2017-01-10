@@ -32,19 +32,21 @@ var onShippingOptionChange = function(pr, details, subtotal, tax) {
 		details.total.amount.value = Math.max(0, totalAmount).toFixed(2);
 	}
 }
+//shipping address change handler
 var onShippingAddressChange = function(pr) {
-		var addr = pr.shippingAddress;
-		var strAddr = addr.addressLine[0] + ', ' + addr.region + ' ' + addr.postalCode
-		console.log('shippingAddressChange: ' + strAddr);
+	var addr = pr.shippingAddress;
+	var strAddr = addr.addressLine[0] + ', ' + addr.region + ' ' + addr.postalCode
+	console.log('shippingAddressChange: ' + strAddr);
 
-		if (addr.country === 'US') {
-			details.shippingOptions = getShippingOptions(addr.region);
-			// shipping no longer pending, pre-selected
-			details.displayItems[1].pending = false;
-		} else {
-			delete details.shippingOptions;
-		}
+	if (addr.country === 'US') {
+		details.shippingOptions = getShippingOptions(addr.region);
+		// shipping no longer pending, pre-selected
+		details.displayItems[1].pending = false;
+	} else {
+		delete details.shippingOptions;
 	}
+}
+
 window.Global = {};
 
 window.Global.startPaymentRequestStaticShipping = function () {
@@ -253,19 +255,18 @@ window.Global.startPaymentRequestDigitalMerchandise = function () {
 	//constructor
 	var request = new PaymentRequest(methodData, details, options);
 
+	//Show the Native UI
+	request.show()
 
-		//Show the Native UI
-		request.show()
-
-		//When the promise is fulfilled, show the Wallet's success view
-		//In a real world scenario, the result obj would be sent
-		//to the server side for processing.
-		.then(function (result) {
-			return result.complete('success');
-		}).catch(function(){
-			console.error("Uh oh, bad payment response!", err.message);
-			paymentResponse.complete("fail")
-		});
+	//When the promise is fulfilled, show the Wallet's success view
+	//In a real world scenario, the result obj would be sent
+	//to the server side for processing.
+	.then(function (result) {
+		return result.complete('success');
+	}).catch(function(){
+		console.error("Uh oh, bad payment response!", err.message);
+		paymentResponse.complete("fail")
+	});
 }
 
 window.Global.startPaymentRequestWithContactInfo = function () {
