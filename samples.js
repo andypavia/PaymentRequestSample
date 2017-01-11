@@ -1,6 +1,10 @@
 (function(){
 	'use strict';
 })
+
+//Global object
+window.Global = {};
+
 //shipping option change handler
 var onShippingOptionChange = function(pr, details, subtotal, tax) {
 	if (pr.shippingOption) {
@@ -32,6 +36,8 @@ var onShippingOptionChange = function(pr, details, subtotal, tax) {
 		details.total.amount.value = Math.max(0, totalAmount).toFixed(2);
 	}
 }
+window.Global.onShippingOptionChange = onShippingOptionChange;
+
 //shipping address change handler
 var onShippingAddressChange = function(pr, details) {
 	var addr = pr.shippingAddress;
@@ -46,6 +52,8 @@ var onShippingAddressChange = function(pr, details) {
 		delete details.shippingOptions;
 	}
 }
+window.Global.onShippingAddressChange = onShippingAddressChange;
+
 //function to get shipping address for dynamic shipping example
 var getShippingOptions = function(state) {
 	switch (state) {
@@ -81,8 +89,7 @@ var getShippingOptions = function(state) {
 			}];
 	}
 }
-
-window.Global = {};
+window.Global.getShippingOptions = getShippingOptions;
 
 window.Global.startPaymentRequestStaticShipping = function () {
 	var methodData = [{
