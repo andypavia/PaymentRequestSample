@@ -223,7 +223,7 @@ window.Global.startPaymentRequestDynamicShipping = function () {
 	//to the server side for processing.
 	.then(function (result) {
 		return result.complete('success');
-	}).catch(function(){
+	}).catch(function(err){
 		console.error('Uh oh, bad payment response!', err.message);
 		result.complete('fail');
 	});
@@ -270,7 +270,7 @@ window.Global.startPaymentRequestDigitalMerchandise = function () {
 	//to the server side for processing.
 	.then(function (result) {
 		return result.complete('success');
-	}).catch(function(){
+	}).catch(function(err){
 		console.error('Uh oh, bad payment response!', err.message);
 		result.complete('fail');
 	});
@@ -344,7 +344,7 @@ window.Global.startPaymentRequestWithContactInfo = function () {
 	//to the server side for processing.
 	.then(function (result) {
 		return result.complete('success');
-	}).catch(function(){
+	}).catch(function(err){
 		console.error('Uh oh, bad payment response!', err.message);
 		result.complete('fail');
 	});
