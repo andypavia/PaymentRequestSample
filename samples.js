@@ -1,3 +1,4 @@
+/* global PaymentRequest */
 (function(){
 	'use strict';
 })
@@ -8,10 +9,11 @@ window.Global = {};
 //shipping option change handler
 var onShippingOptionChange = function(pr, details, subtotal, tax) {
 	if (pr.shippingOption) {
+		var shippingOption;
 		for (var index = 0; index < details.shippingOptions.length; index++) {
 			var opt = details.shippingOptions[index];
 			if (opt.id === pr.shippingOption) {
-				var shippingOption = opt;
+				shippingOption = opt;
 				break;
 			}
 		}
@@ -63,7 +65,7 @@ var getShippingOptions = function(state) {
 				amount: { currency: 'USD', value: '0.00' },
 				selected: true
 			}, {
-				id: 'STANDARD',
+				id: 'STANDARD', 
 				label: 'Standard Shipping',
 				amount: { currency: 'USD', value: '6.00' }
 			}, {
@@ -78,7 +80,7 @@ window.Global.getShippingOptions = getShippingOptions;
 //shipping address change handler
 var onShippingAddressChange = function(pr, details) {
 	var addr = pr.shippingAddress;
-	var strAddr = addr.addressLine[0] + ', ' + addr.region + ' ' + addr.postalCode
+	var strAddr = addr.addressLine[0] + ', ' + addr.region + ' ' + addr.postalCode;
 	console.log('shippingAddressChange: ' + strAddr);
 
 	if (addr.country === 'US') {
@@ -159,7 +161,6 @@ window.Global.startPaymentRequestStaticShipping = function () {
 		return result.complete('success');
 	}).catch(function(err){
 		console.error('Uh oh, bad payment response!', err.message);
-		result.complete('fail');
 	});
 }
 
@@ -225,7 +226,6 @@ window.Global.startPaymentRequestDynamicShipping = function () {
 		return result.complete('success');
 	}).catch(function(err){
 		console.error('Uh oh, bad payment response!', err.message);
-		result.complete('fail');
 	});
 }
 
@@ -272,7 +272,6 @@ window.Global.startPaymentRequestDigitalMerchandise = function () {
 		return result.complete('success');
 	}).catch(function(err){
 		console.error('Uh oh, bad payment response!', err.message);
-		result.complete('fail');
 	});
 }
 
@@ -346,6 +345,5 @@ window.Global.startPaymentRequestWithContactInfo = function () {
 		return result.complete('success');
 	}).catch(function(err){
 		console.error('Uh oh, bad payment response!', err.message);
-		result.complete('fail');
 	});
 };

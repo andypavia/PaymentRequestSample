@@ -13,10 +13,11 @@ window.onload = function() {
 		Global = window.Global,
 		shippingOptionChangeHandlerString = '\n\nvar onShippingOptionChange = ' + Global.onShippingOptionChange.toString(),
 		shippingAddressHandlerString = '\n\nvar onShippingAddressChange = ' + Global.onShippingAddressChange.toString(),
-		getShippingOptionsString = '\n\nvar onShippingOptionChange = ' +Global.getShippingOptions.toString();
+		getShippingOptionsString = '\n\nvar onShippingOptionChange = ' + Global.getShippingOptions.toString();
+
 	//Loading the same code into the HTML
 	staticShipping.innerHTML = Global.startPaymentRequestStaticShipping.toString() + shippingOptionChangeHandlerString;
-	dynamicShipping.innerHTML = Global.startPaymentRequestDynamicShipping.toString() + shippingOptionChangeHandlerString + shippingOptionChangeHandlerString + shippingAddressHandlerString;
+	dynamicShipping.innerHTML = Global.startPaymentRequestDynamicShipping.toString() + getShippingOptionsString + shippingOptionChangeHandlerString + shippingAddressHandlerString;
 	noShipping.innerHTML = Global.startPaymentRequestDigitalMerchandise.toString() + shippingAddressHandlerString + shippingOptionChangeHandlerString;
 	requestContact.innerHTML = Global.startPaymentRequestWithContactInfo.toString() + shippingOptionChangeHandlerString;
 
@@ -53,4 +54,4 @@ window.onload = function() {
 	forEach('pre code', function(div) {
 		hljs.highlightBlock(div);
 	});
-}
+};
