@@ -152,7 +152,7 @@ window.Global.startPaymentRequestStaticShipping = function () {
 		return result.complete('success');
 	}).catch(function(err){
 		console.error('Uh oh, bad payment response!', err.message);
-		paymentResponse.complete("fail")
+		paymentResponse.complete('fail');
 	});
 }
 
@@ -217,8 +217,8 @@ window.Global.startPaymentRequestDynamicShipping = function () {
 	.then(function (result) {
 		return result.complete('success');
 	}).catch(function(){
-		console.error("Uh oh, bad payment response!", err.message);
-		paymentResponse.complete("fail")
+		console.error('Uh oh, bad payment response!', err.message);
+		paymentResponse.complete('fail');
 	});
 }
 
@@ -264,8 +264,8 @@ window.Global.startPaymentRequestDigitalMerchandise = function () {
 	.then(function (result) {
 		return result.complete('success');
 	}).catch(function(){
-		console.error("Uh oh, bad payment response!", err.message);
-		paymentResponse.complete("fail")
+		console.error('Uh oh, bad payment response!', err.message);
+		paymentResponse.complete('fail');
 	});
 }
 
@@ -338,7 +338,7 @@ window.Global.startPaymentRequestWithContactInfo = function () {
 	.then(function (result) {
 		return result.complete('success');
 	}).catch(function(){
-		console.error("Uh oh, bad payment response!", err.message);
-		paymentResponse.complete("fail")
+		console.error('Uh oh, bad payment response!', err.message);
+		paymentResponse.complete('fail');
 	});
 }
