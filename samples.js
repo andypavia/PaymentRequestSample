@@ -35,24 +35,8 @@ var onShippingOptionChange = function(pr, details, subtotal, tax) {
 		var totalAmount = subtotal + shippingCost + tax;
 		details.total.amount.value = Math.max(0, totalAmount).toFixed(2);
 	}
-}
+};
 window.Global.onShippingOptionChange = onShippingOptionChange;
-
-//shipping address change handler
-var onShippingAddressChange = function(pr, details) {
-	var addr = pr.shippingAddress;
-	var strAddr = addr.addressLine[0] + ', ' + addr.region + ' ' + addr.postalCode
-	console.log('shippingAddressChange: ' + strAddr);
-
-	if (addr.country === 'US') {
-		details.shippingOptions = getShippingOptions(addr.region);
-		// shipping no longer pending, pre-selected
-		details.displayItems[1].pending = false;
-	} else {
-		delete details.shippingOptions;
-	}
-}
-window.Global.onShippingAddressChange = onShippingAddressChange;
 
 //function to get shipping address for dynamic shipping example
 var getShippingOptions = function(state) {
@@ -88,8 +72,24 @@ var getShippingOptions = function(state) {
 				amount: { currency: 'USD', value: '8.00' }
 			}];
 	}
-}
+};
 window.Global.getShippingOptions = getShippingOptions;
+
+//shipping address change handler
+var onShippingAddressChange = function(pr, details) {
+	var addr = pr.shippingAddress;
+	var strAddr = addr.addressLine[0] + ', ' + addr.region + ' ' + addr.postalCode
+	console.log('shippingAddressChange: ' + strAddr);
+
+	if (addr.country === 'US') {
+		details.shippingOptions = getShippingOptions(addr.region);
+		// shipping no longer pending, pre-selected
+		details.displayItems[1].pending = false;
+	} else {
+		delete details.shippingOptions;
+	}
+}
+window.Global.onShippingAddressChange = onShippingAddressChange;
 
 window.Global.startPaymentRequestStaticShipping = function () {
 	var methodData = [{
@@ -159,7 +159,7 @@ window.Global.startPaymentRequestStaticShipping = function () {
 		return result.complete('success');
 	}).catch(function(err){
 		console.error('Uh oh, bad payment response!', err.message);
-		paymentResponse.complete('fail');
+		result.complete('fail');
 	});
 }
 
@@ -225,7 +225,7 @@ window.Global.startPaymentRequestDynamicShipping = function () {
 		return result.complete('success');
 	}).catch(function(){
 		console.error('Uh oh, bad payment response!', err.message);
-		paymentResponse.complete('fail');
+		result.complete('fail');
 	});
 }
 
@@ -272,7 +272,7 @@ window.Global.startPaymentRequestDigitalMerchandise = function () {
 		return result.complete('success');
 	}).catch(function(){
 		console.error('Uh oh, bad payment response!', err.message);
-		paymentResponse.complete('fail');
+		result.complete('fail');
 	});
 }
 
@@ -346,6 +346,6 @@ window.Global.startPaymentRequestWithContactInfo = function () {
 		return result.complete('success');
 	}).catch(function(){
 		console.error('Uh oh, bad payment response!', err.message);
-		paymentResponse.complete('fail');
+		result.complete('fail');
 	});
-}
+};
