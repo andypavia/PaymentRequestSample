@@ -1,346 +1,58 @@
-/* global PaymentRequest */
-(function(){
+/* global hljs */
+window.onload = function() {
 	'use strict';
-	//Global object
-	window.Global = {};
 
-	//shipping option change handler
-	const onShippingOptionChange = function(pr, details, subtotal, tax) {
-		if (pr.shippingOption) {
-			let shippingOption;
-			for (let index = 0; index < details.shippingOptions.length; index++) {
-				const opt = details.shippingOptions[index];
-				if (opt.id === pr.shippingOption) {
-					shippingOption = opt;
-					break;
-				}
-			}
-			if (!shippingOption) {
-				return;
-			}
-			console.log(`shippingOptionChange: ${shippingOption.label}`);
-			const shippingCost = Number(shippingOption.amount.value);
+	let staticShipping = document.getElementById('static-shipping-sample'),
+		dynamicShipping = document.getElementById('dynamic-shipping-sample'),
+		noShipping = document.getElementById('no-shipping-sample'),
+		requestContact = document.getElementById('request-contact-sample'),
+		staticShippingBtn = document.getElementById('static-shipping'),
+		dynamicShippingBtn = document.getElementById('dynamic-shipping'),
+		noShippingBtn = document.getElementById('no-shipping'),
+		requestContactBtn = document.getElementById('request-contact-info'),
+		notSupportedMessage = document.getElementById('not-supported'),
+		Global = window.Global,
+		shippingOptionChangeHandlerString = `\n\nvar onShippingOptionChange = ${Global.onShippingOptionChange.toString()}`,
+		shippingAddressHandlerString = `\n\nvar onShippingAddressChange = ${Global.onShippingAddressChange.toString()}`,
+		getShippingOptionsString = `\n\nvar onShippingOptionChange = ${Global.getShippingOptions.toString()}`;
 
-			details.displayItems = [{
-				label: 'Sub-total',
-				amount: { currency: 'USD', value: subtotal.toFixed(2) }
-			}, {
-				label: 'Shipping',
-				amount: { currency: 'USD', value: shippingCost.toFixed(2) },
-				pending: false
-			}, {
-				label: 'Sales Tax',
-				amount: { currency: 'USD', value: tax.toFixed(2) }
-			}];
-			const totalAmount = subtotal + shippingCost + tax;
-			details.total.amount.value = Math.max(0, totalAmount).toFixed(2);
-		}
-	};
-	window.Global.onShippingOptionChange = onShippingOptionChange;
+	//Loading the same code into the HTML
+	staticShipping.innerHTML = Global.startPaymentRequestStaticShipping.toString() + shippingOptionChangeHandlerString;
+	dynamicShipping.innerHTML = Global.startPaymentRequestDynamicShipping.toString() + getShippingOptionsString + shippingOptionChangeHandlerString + shippingAddressHandlerString;
+	noShipping.innerHTML = Global.startPaymentRequestDigitalMerchandise.toString() + shippingAddressHandlerString + shippingOptionChangeHandlerString;
+	requestContact.innerHTML = Global.startPaymentRequestWithContactInfo.toString() + shippingOptionChangeHandlerString;
 
-	//function to get shipping address for dynamic shipping example
-	const getShippingOptions = function(state) {
-		switch (state) {
-			case 'WA':
-				return [{
-					id: 'NO_RUSH',
-					label: 'No-Rush Shipping',
-					amount: { currency: 'USD', value: '0.00' },
-					selected: true
-				}, {
-					id: 'STANDARD',
-					label: 'Standard Shipping',
-					amount: { currency: 'USD', value: '5.00' }
-				}, {
-					id: 'EXPEDITED',
-					label: 'Two-Day Shipping',
-					amount: { currency: 'USD', value: '7.00' }
-				}];
-			default:
-				return [{
-					id: 'NO_RUSH',
-					label: 'No-Rush Shipping',
-					amount: { currency: 'USD', value: '0.00' },
-					selected: true
-				}, {
-					id: 'STANDARD',
-					label: 'Standard Shipping',
-					amount: { currency: 'USD', value: '6.00' }
-				}, {
-					id: 'EXPEDITED',
-					label: 'Two-Day Shipping',
-					amount: { currency: 'USD', value: '8.00' }
-				}];
-		}
-	};
-	window.Global.getShippingOptions = getShippingOptions;
+	//attaching event listeners
+	staticShippingBtn.addEventListener('click', Global.startPaymentRequestStaticShipping);
+	dynamicShippingBtn.addEventListener('click', Global.startPaymentRequestDynamicShipping);
+	noShippingBtn.addEventListener('click', Global.startPaymentRequestDigitalMerchandise);
+	requestContactBtn.addEventListener('click', Global.startPaymentRequestWithContactInfo);
 
-	//shipping address change handler
-	const onShippingAddressChange = function(pr, details) {
-		const addr = pr.shippingAddress;
-		const strAddr = `${addr.addressLine[0]}, ${addr.region} ${addr.postalCode}`;
-		console.log(`shippingAddressChange: ${strAddr}`);
-
-		if (addr.country === 'US') {
-			details.shippingOptions = getShippingOptions(addr.region);
-			// shipping no longer pending, pre-selected
-			details.displayItems[1].pending = false;
-		} else {
-			delete details.shippingOptions;
-		}
-	};
-	window.Global.onShippingAddressChange = onShippingAddressChange;
-
-	window.Global.startPaymentRequestStaticShipping = function () {
-		const methodData = [{
-			supportedMethods: ['basic-card'],
-			data: {
-				supportedNetworks: ['visa', 'mastercard', 'amex'],
-				supportedTypes: ['credit']
-			}
-		}];
-
-		const subtotal = 44.00;
-		const tax = 4.40;
-		const details = {
-			total: {
-				label: 'Total due',
-				amount: { currency: 'USD', value: (subtotal + tax).toFixed(2) }
-			},
-			displayItems: [{
-				label: 'Sub-total',
-				amount: { currency: 'USD', value: subtotal.toFixed(2) }
-			}, {
-				label: 'Shipping',
-				amount: { currency: 'USD', value: '0.00' },
-				pending: true
-			}, {
-				label: 'Sales Tax',
-				amount: { currency: 'USD', value: tax.toFixed(2) }
-			}],
-			shippingOptions: [{
-				id: 'NO_RUSH',
-				label: 'No-Rush Shipping',
-				amount: { currency: 'USD', value: '0.00' },
-				selected: true
-			}, {
-				id: 'STANDARD',
-				label: 'Standard Shipping',
-				amount: { currency: 'USD', value: '5.00' }
-			}, {
-				id: 'EXPEDITED',
-				label: 'Two-Day Shipping',
-				amount: { currency: 'USD', value: '7.00' }
-			}]
-		};
-
-		const options = {requestShipping: true};
-
-		//constructor
-		const request = new PaymentRequest(methodData, details, options);
-
-		//Listen to a shipping option change
-		request.addEventListener('shippingoptionchange', function (changeEvent) {
-			changeEvent.updateWith(new Promise(function (resolve) {
-				onShippingOptionChange(request, details, subtotal, tax);
-				resolve(details);
-			}));
-		});
-
-		//Show the Native UI
-		request.show()
-
-		//When the promise is fulfilled, show the Wallet's success view
-		//In a real world scenario, the result obj would be sent
-		//to the server side for processing.
-		.then(function (result) {
-			return result.complete('success');
-		})
-		.catch(function(err){
-			console.error('Uh oh, bad payment response!', err.message);
-		});
+	//helper function
+	const forEach = function(selector, iteratee) {
+		Array.prototype.forEach.call(document.querySelectorAll(selector), iteratee);
 	};
 
-	window.Global.startPaymentRequestDynamicShipping = function () {
-		const methodData = [{
-			supportedMethods: ['basic-card'],
-			data: {
-				supportedNetworks: ['visa', 'mastercard', 'amex'],
-				supportedTypes: ['credit']
-			}
-		}];
-
-		const subtotal = 44.00;
-		const tax = 4.40;
-		const details = {
-			total: {
-				label: 'Total due',
-				amount: { currency: 'USD', value: (subtotal + tax).toFixed(2) }
-			},
-			displayItems: [{
-				label: 'Sub-total',
-				amount: { currency: 'USD', value: subtotal.toFixed(2) }
-			}, {
-				label: 'Shipping',
-				amount: { currency: 'USD', value: '0.00' },
-				pending: true
-			}, {
-				label: 'Sales Tax',
-				amount: { currency: 'USD', value: tax.toFixed(2) }
-			}]
-		};
-
-		const options = {requestShipping: true};
-
-		//constructor
-		const request = new PaymentRequest(methodData, details, options);
-
-		//Listen to a shipping address change
-		request.addEventListener('shippingaddresschange', function (changeEvent) {
-			changeEvent.updateWith(new Promise(function (resolve) {
-				onShippingAddressChange(request, details);
-				resolve(details);
-			}));
+	//Hide demo buttons if the browser doesn't support the Payment Request API
+	if (!('PaymentRequest' in window)) {
+		notSupportedMessage.innerHTML = 'This browser does not support web payments. You should try the Microsoft Edge browser!';
+		forEach('button', function(button){
+			button.disabled = true;
 		});
+	}
 
-		//Listen to a shipping option change
-		request.addEventListener('shippingoptionchange', function (changeEvent) {
-			changeEvent.updateWith(new Promise(function (resolve) {
-				onShippingOptionChange(request, details, subtotal, tax);
-				resolve(details);
-			}));
+	//Expand or contract code displayer
+	forEach('.top-bar', function(div) {
+		div.addEventListener('click', function(event) {
+			const expander = event.target.parentElement.querySelector('.expander');
+			const text = expander.classList.contains('expand') ? 'See the code' : 'Hide the code';
+			event.target.innerHTML = text;
+			expander.classList.toggle('expand');
 		});
+	});
 
-		//Show the Native UI
-		request.show()
-
-		//When the promise is fulfilled, show the Wallet's success view
-		//In a real world scenario, the result obj would be sent
-		//to the server side for processing.
-		.then(function (result) {
-			return result.complete('success');
-		})
-		.catch(function(err){
-			console.error('Uh oh, bad payment response!', err.message);
-		});
-	};
-
-	window.Global.startPaymentRequestDigitalMerchandise = function () {
-		const methodData = [{
-			supportedMethods: ['basic-card'],
-			data: {
-				supportedNetworks: ['visa', 'mastercard', 'amex'],
-				supportedTypes: ['credit']
-			}
-		}];
-
-		const subtotal = 44.00;
-		const tax = 4.40;
-
-		const details = {
-			total: {
-				label: 'Total due',
-				amount: { currency: 'USD', value: (subtotal + tax).toFixed(2) }
-			},
-			displayItems: [{
-				label: 'Sub-total',
-				amount: { currency: 'USD', value: subtotal.toFixed(2) }
-			}, {
-				label: 'Sales Tax',
-				amount: { currency: 'USD', value: tax.toFixed(2) }
-			}]
-		};
-
-		const options = {requestPayerEmail: true};
-
-		//constructor
-		const request = new PaymentRequest(methodData, details, options);
-
-		//Show the Native UI
-		request.show()
-
-		//When the promise is fulfilled, show the Wallet's success view
-		//In a real world scenario, the result obj would be sent
-		//to the server side for processing.
-		.then(function (result) {
-			return result.complete('success');
-		})
-		.catch(function(err){
-			console.error('Uh oh, bad payment response!', err.message);
-		});
-	};
-
-	window.Global.startPaymentRequestWithContactInfo = function () {
-		const methodData = [{
-			supportedMethods: ['basic-card'],
-			data: {
-				supportedNetworks: ['visa', 'mastercard', 'amex'],
-				supportedTypes: ['credit']
-			}
-		}];
-
-		const subtotal = 44.00;
-		const tax = 4.40;
-
-		const details = {
-			total: {
-				label: 'Total due',
-				amount: { currency: 'USD', value: (subtotal + tax).toFixed(2) }
-			},
-			displayItems: [{
-				label: 'Sub-total',
-				amount: { currency: 'USD', value: subtotal.toFixed(2) }
-			}, {
-				label: 'Shipping',
-				amount: { currency: 'USD', value: '0.00' }
-			}, {
-				label: 'Sales Tax',
-				amount: { currency: 'USD', value: tax.toFixed(2) }
-			}],
-			shippingOptions: [{
-				id: 'NO_RUSH',
-				label: 'No-Rush Shipping',
-				amount: { currency: 'USD', value: '0.00' },
-				selected: true
-			}, {
-				id: 'STANDARD',
-				label: 'Standard Shipping',
-				amount: { currency: 'USD', value: '5.00' }
-			}, {
-				id: 'EXPEDITED',
-				label: 'Two-Day Shipping',
-				amount: { currency: 'USD', value: '7.00' }
-			}]
-		};
-
-		const options = {
-			requestPayerEmail: true,
-			requestPayerPhone: true,
-			requestShipping: true
-		};
-
-		//constructor
-		const request = new PaymentRequest(methodData, details, options);
-
-		//Listen to a shipping option change
-		request.addEventListener('shippingoptionchange', function (changeEvent) {
-			changeEvent.updateWith(new Promise(function (resolve) {
-				onShippingOptionChange(request, details, subtotal, tax);
-				resolve(details);
-			}));
-		});
-
-		//Show the Native UI
-		request.show()
-
-		//When the promise is fulfilled, show the Wallet's success view
-		//In a real world scenario, the result obj would be sent
-		//to the server side for processing.
-		.then(function (result) {
-			return result.complete('success');
-		})
-		.catch(function(err){
-			console.error('Uh oh, bad payment response!', err.message);
-		});
-	};
-})();
+	//highlighting samples
+	forEach('pre code', function(div) {
+		hljs.highlightBlock(div);
+	});
+};
